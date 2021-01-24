@@ -46,6 +46,11 @@ public class JobData {
         return values;
     }
 
+    public static ArrayList<HashMap<String, String>> getAllJobs() {
+        return allJobs;
+    }
+
+
     public static ArrayList<HashMap<String, String>> findAll() {
 
         // load data, if not already loaded
@@ -54,7 +59,10 @@ public class JobData {
         return allJobs;
     }
 
-    /**
+
+
+
+   /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
      *
@@ -76,14 +84,38 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
+
             }
+
         }
 
         return jobs;
     }
+public static  ArrayList <HashMap<String,String>> findByValue (String column, String value){
 
+    loadData();
+
+    ArrayList<HashMap<String, String>> colValue = new ArrayList<>();
+
+    for (HashMap<String, String> row : allJobs) {
+
+        String aValue = row.get(column);
+
+        if (aValue.contains(value)) {
+            colValue.add(row);
+        }
+
+
+        else {
+            System.out.println("Sorry, this Item Searched is not available.");
+            return colValue;
+        }
+    }
+
+    return colValue;
+}
     /**
      * Read in data from a CSV file and store it in a list
      */
@@ -124,5 +156,4 @@ public class JobData {
             e.printStackTrace();
         }
     }
-
 }
